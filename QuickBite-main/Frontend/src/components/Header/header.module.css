@@ -1,0 +1,106 @@
+.header{
+    height: 400px;
+    margin: 30px auto;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%),
+                url('/header_img.png') no-repeat;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.2);
+}
+
+.headerContent{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    gap: 24px;
+    max-width: 50%;
+    bottom: 10%;
+    left: 6%;
+    animation: fadeIn 0.8s ease-in;
+}
+
+.headerContent h2{
+    font-weight: 700;
+    color: white;
+    font-size: 52px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+}
+
+.headerContent p{
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.headerContent button{
+    border: none;
+    color: white;
+    font-weight: 600;
+    padding: 14px 32px;
+    background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+    font-size: 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 16px rgba(255, 126, 95, 0.3);
+}
+
+.headerContent button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 126, 95, 0.4);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width:1050px){
+    .headerContent{
+        max-width: 55%;
+    }
+
+    .headerContent h2 {
+        font-size: 40px;
+    }
+}
+
+@media (max-width:750px){
+    .header {
+        height: 300px;
+        margin: 20px auto;
+    }
+
+    .headerContent{
+        max-width: 70%;
+        gap: 16px;
+        bottom: 8%;
+        left: 4%;
+    }
+
+    .headerContent h2 {
+        font-size: 28px;
+    }
+
+    .headerContent p{
+        display: none;
+    }
+
+    .headerContent button{
+        padding: 12px 24px;
+        font-size: 14px;
+    }
+}

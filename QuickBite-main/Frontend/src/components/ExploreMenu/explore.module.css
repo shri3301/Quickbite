@@ -1,0 +1,110 @@
+.ExploreMenu{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    margin-bottom: 40px;
+}
+
+.ExploreMenu h1{
+    color: #1f1f1f;
+    font-weight: 700;
+    font-size: 32px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    letter-spacing: 0.3px;
+}
+
+.ExploreMenuText{
+    max-width: 70%;
+    color: #696969;
+    font-size: 16px;
+    line-height: 1.6;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.ExploreMenuList{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+    text-align: center;
+    margin: 20px 0px;
+    overflow-x: scroll;
+    padding-bottom: 16px;
+}
+
+.ExploreMenuList::-webkit-scrollbar{
+    height: 4px;
+}
+
+.ExploreMenuList::-webkit-scrollbar-thumb {
+    background-color: #ddd;
+    border-radius: 4px;
+}
+
+.MenuListItem img{
+    width: 90px;
+    height: 90px;
+    min-width: 90px;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    border: 3px solid transparent;
+    object-fit: cover;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.MenuListItem img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+.MenuListItem p{
+    margin-top: 10px;
+    color: #7d8694;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.MenuListItem p:hover {
+    color: #1f1f1f;
+}
+
+.ExploreMenu hr{
+    margin: 20px 0px;
+    height: 1px;
+    background-color: #e8e8e8;
+    border: none;
+}
+
+.MenuListItem .active{
+    border: 3px solid #667eea;
+    padding: 0;
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.25);
+}
+
+@media (max-width:1050px){
+    .ExploreMenuText{
+        max-width: 100%;
+        font-size: 14px;
+    }
+    
+    .MenuListItem img {
+        width: 75px;
+        height: 75px;
+        min-width: 75px;
+    }
+}
+
+@media (max-width: 750px) {
+    .MenuListItem img {
+        width: 60px;
+        height: 60px;
+        min-width: 60px;
+    }
+
+    .MenuListItem p {
+        font-size: 12px;
+    }
+}

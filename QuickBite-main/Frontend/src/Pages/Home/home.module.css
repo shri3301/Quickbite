@@ -1,0 +1,46 @@
+.a1 {
+    background: #fff;
+}
+
+.homeContent {
+    min-height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-align: center;
+}
+
+.homeContent h2 {
+    font-size: 48px;
+    font-weight: 700;
+    margin-bottom: 24px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.homeContent p {
+    font-size: 18px;
+    line-height: 1.8;
+    max-width: 700px;
+    opacity: 0.95;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+    margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+    .homeContent {
+        padding: 60px 20px;
+    }
+
+    .homeContent h2 {
+        font-size: 32px;
+    }
+
+    .homeContent p {
+        font-size: 16px;
+    }
+}

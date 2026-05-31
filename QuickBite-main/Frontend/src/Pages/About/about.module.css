@@ -1,0 +1,16 @@
+.aboutPage {
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.aboutPage h1 {
+  font-size: 2.4rem;
+  margin-bottom: 24px;
+}
+
+.aboutPage p {
+  font-size: 1rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}

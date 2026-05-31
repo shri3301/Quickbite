@@ -1,0 +1,16 @@
+.mobileAppPage {
+  padding: 40px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.mobileAppPage h1 {
+  font-size: 2.4rem;
+  margin-bottom: 16px;
+}
+
+.mobileAppPage p {
+  font-size: 1rem;
+  margin-bottom: 24px;
+  line-height: 1.7;
+}

@@ -1,0 +1,40 @@
+.FoodDisplay{
+    margin-top: 40px;
+}
+
+.FoodDisplay h2{
+    font-size: 28px;
+    font-weight: 700;
+    color: #1f1f1f;
+    margin-bottom: 32px;
+    font-family: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+.FoodDisplayList{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    margin-top: 30px;
+    gap: 24px;
+    row-gap: 40px;
+}
+
+@media (max-width: 1050px) {
+    .FoodDisplayList {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 20px;
+        row-gap: 35px;
+    }
+}
+
+@media (max-width: 750px) {
+    .FoodDisplay h2 {
+        font-size: 22px;
+    }
+
+    .FoodDisplayList {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 16px;
+        row-gap: 28px;
+    }
+}
+
