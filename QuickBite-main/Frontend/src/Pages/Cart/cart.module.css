@@ -57,12 +57,19 @@
 
 .CartTotal button{
     border: none;
-    color: black;
-    background-color: #eded05;
+    color: white;
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
     width: max(18vw,250px);
     padding: 12px 0px;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.CartTotal button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(26, 188, 156, 0.3);
 }
 
 .CartPromoCode{
@@ -92,11 +99,18 @@
 .CartPromoCodeInput button{
     width: max(10vw,150px);
     padding: 12px 5px;
-    background-color: black;
+    background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
     border: none;
     color: white;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.CartPromoCodeInput button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
 }
 
 @media (max-width:750px){

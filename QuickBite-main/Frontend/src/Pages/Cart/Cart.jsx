@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import style from "./cart.module.css";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from 'react-router-dom';
+import { assets } from '../../assets/assets'
 
 const Cart = () => {
   const { cartItem, food_list, removeFromCart, getTotalCartAmount , URl} = useContext(StoreContext);
@@ -24,11 +25,18 @@ const Cart = () => {
         {food_list.map((item, index) => {
           if (cartItem[item._id] > 0) {
             return (
-              <div>
+              <div key={index}>
                 <div
                   className={`${style.CartItemsTitle} ${style.CartItemsItem}`}
                 >
-                  <img src={URl+"/images/"+item.image} alt="" />
+                  <img
+                    src={URl + "/images/" + item.image}
+                    alt={item.name}
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = assets.fallback_food;
+                    }}
+                  />
                   <p>{item.name}</p>
                   <p>${item.price}</p>
                   <p>{cartItem[item._id]}</p>

@@ -79,9 +79,9 @@
 }
 
 .MenuListItem .active{
-    border: 3px solid #667eea;
+    border: 3px solid #1abc9c;
     padding: 0;
-    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.25);
+    box-shadow: 0 6px 16px rgba(26, 188, 156, 0.25);
 }
 
 @media (max-width:1050px){

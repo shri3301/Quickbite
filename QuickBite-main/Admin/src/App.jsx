@@ -10,7 +10,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
-  const URl = "http://localhost:4000"
+  const URl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:4000"
+    : window.location.origin;
 
 
   return (

@@ -14,7 +14,7 @@ html {
 
 body{
   min-height: 100vh;
-  background-color: #f5f5f5;
+  background-color: #f7fbfa;
   color: #1f1f1f;
 }
 
@@ -35,16 +35,16 @@ a{
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #f7fbfa;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: linear-gradient(180deg, #1abc9c, #16a085);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: linear-gradient(180deg, #16a085, #0d8a6f);
 }
 
 @keyframes fadeIn{

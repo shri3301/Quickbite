@@ -81,6 +81,8 @@ export const assets = {
     bag_icon,
     parcel_icon
 }
+// default fallback food image (used when backend image fails to load)
+export const fallback_food = food_1;
 
 export const menu_list = [
     {

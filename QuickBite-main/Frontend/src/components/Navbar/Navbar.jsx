@@ -44,21 +44,23 @@ const Navbar = ({ setShowLogin }) => {
         </NavLink>
       </ul>
       <div className={style.navbarRight}>
-        <img src={assets.search_icon} />
-        <div className={style.searchIcon}>
+        <div className={style.searchIcon} onClick={() => navigate('/menu')}>
+          <img src={assets.search_icon} alt="Search menu" />
+        </div>
+        <div className={style.cartIcon}>
           <Link to='/cart'>
-            <img src={assets.basket_icon} />
+            <img src={assets.basket_icon} alt="Cart" />
           </Link>
           <div className={getTotalCartAmount() ? style.dot : ""}></div>
         </div>
-        {!token ? <button
+        {!token ? <button type="button"
           onClick={() => {
             setShowLogin(true);
           }}
         >
           Sign in
         </button> : <div className={style.navbarProfile}>
-          <img src={assets.profile_icon} />
+          <img src={assets.profile_icon} alt="Profile" />
           <ul className={style.navProfileDropdown}>
             <li onClick={()=>navigate('/myorders')}><img src={assets.bag_icon} /><p>Orders</p></li>
             <hr />

@@ -4,7 +4,9 @@ import axios from "axios";
 
 const StoreContextProvider = (props) => {
   const [cartItem, setCartItems] = useState({});
-  const URl = "http://localhost:4000"
+  const URl = window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+    ? "http://localhost:4000"
+    : window.location.origin;
   const [token , setToken] = useState("")
   const [food_list,setFoodList] = useState([])
 
