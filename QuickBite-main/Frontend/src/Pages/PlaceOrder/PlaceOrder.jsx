@@ -1,13 +1,25 @@
-import { useContext, useEffect, useState } from 'react'
-import style from './placeorder.module.css'
-import style1 from '../Cart/cart.module.css'
-import { StoreContext } from '../../context/StoreContext'
-import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useContext, useEffect, useState } from "react";
+import { StoreContext } from "../../Context/StoreContext";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import "./placeorder.css";
 
 const PlaceOrder = () => {
+  const {
+    getTotalCartAmount,
+    token,
+    food_list,
+    cartItem,
+    URl,
+    discountAmount,
+    couponCode,
+    applyCoupon,
+    setCouponCode,
+    setDiscountAmount,
+  } = useContext(StoreContext);
 
-  const { getTotalCartAmount, token, food_list, cartItem, URl } = useContext(StoreContext)
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     firstName: "",
@@ -18,96 +30,366 @@ const PlaceOrder = () => {
     state: "",
     zipcode: "",
     country: "",
-    phone: ""
-  })
+    phone: "",
+  });
 
+  const [localCoupon, setLocalCoupon] = useState("");
+  const [couponLoading, setCouponLoading] = useState(false);
+  const [couponError, setCouponError] = useState("");
 
-  const onChangeHandler = (event) => {
-    const name = event.target.name
-    const value = event.target.value
-    setData(data => ({ ...data, [name]: value }))
-  }
+  // Guard: redirect to cart if not logged in or cart is empty
+  useEffect(() => {
+    if (!token) {
+      navigate("/cart");
+    }
+    if (getTotalCartAmount() === 0) {
+      navigate("/cart");
+    }
+  }, [token, getTotalCartAmount, navigate]);
 
-  const placeOrder = async (event) => {
-    event.preventDefault();
-    let orderItems = [];
-    food_list.map((item) => {
-      if (cartItem[item._id] > 0) {
-        let itemInfo = item;
-        itemInfo["quantity"] = cartItem[item._id]
-        orderItems.push(itemInfo)
+  // Dynamically load Razorpay SDK
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const placeOrder = async (e) => {
+    e.preventDefault();
+
+    // Build order items from cart
+    const orderItems = food_list
+      .filter((item) => cartItem[item._id] > 0)
+      .map((item) => ({ ...item, quantity: cartItem[item._id] }));
+
+    const finalAmount = getTotalCartAmount() + 40 - discountAmount;
+
+    try {
+      const response = await axios.post(
+        URl + "/api/order/place",
+        {
+          address: data,
+          items: orderItems,
+          amount: finalAmount,
+          discountCode: couponCode,
+          discountAmount,
+        },
+        { headers: { token } }
+      );
+
+      if (response.data.success) {
+        const { orderId, razorpayOrderId, amount, currency, key } =
+          response.data;
+
+        const options = {
+          key,
+          amount,
+          currency,
+          name: "QuickBite",
+          description: "Food Order",
+          order_id: razorpayOrderId,
+          handler: async (razorpayResponse) => {
+            try {
+              const verifyRes = await axios.post(URl + "/api/order/verify", {
+                orderId,
+                razorpayOrderId,
+                razorpayPaymentId: razorpayResponse.razorpay_payment_id,
+                razorpaySignature: razorpayResponse.razorpay_signature,
+              });
+              if (verifyRes.data.success) {
+                toast.success("Payment successful! Order placed.");
+                navigate("/myorders");
+              } else {
+                toast.error("Payment verification failed. Please contact support.");
+              }
+            } catch {
+              toast.error("Payment verification error. Please contact support.");
+            }
+          },
+          prefill: {
+            name: data.firstName + " " + data.lastName,
+            email: data.email,
+            contact: data.phone,
+          },
+          theme: {
+            color: "#FC8019",
+          },
+        };
+
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } else {
+        toast.error(response.data.message || "Failed to place order.");
       }
-    })
-    
-    let orderData = {
-      address: data,
-      items: orderItems,
-      amount:getTotalCartAmount()+2
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong while placing your order.");
     }
-    let response = await axios.post(URl+"/api/order/place", orderData,{headers:{token}})
-    if(response.data.success){
-      const { session_url } = response.data;
-      window.location.replace(session_url)
-    } else {
-      console.log(response.data.message)
-      alert("Error")
+  };
+
+  const handleCouponApply = async () => {
+    if (!localCoupon.trim()) {
+      setCouponError("Please enter a coupon code.");
+      return;
     }
-  }
+    setCouponLoading(true);
+    setCouponError("");
+    try {
+      const result = await applyCoupon(localCoupon.trim(), getTotalCartAmount());
+      if (result && result.success) {
+        toast.success("Coupon applied successfully!");
+        setCouponCode(localCoupon.trim());
+      } else {
+        const msg = (result && result.message) || "Invalid or expired coupon.";
+        setCouponError(msg);
+        toast.error(msg);
+        setDiscountAmount(0);
+        setCouponCode("");
+      }
+    } catch {
+      const msg = "Failed to apply coupon.";
+      setCouponError(msg);
+      toast.error(msg);
+    } finally {
+      setCouponLoading(false);
+    }
+  };
 
-  const navigate = useNavigate()
+  const subtotal = getTotalCartAmount();
+  const delivery = 40;
+  const total = subtotal + delivery - discountAmount;
 
-  useEffect(()=>{
-    if(!token){
-      navigate('/cart')
-    } else if(getTotalCartAmount() === 0){
-      navigate("/cart")
-    } 
-  },[token])
+  const cartItems = food_list.filter((item) => cartItem[item._id] > 0);
 
   return (
-    <form onSubmit={placeOrder} className={style.placeOrder}>
-      <div className={style.placeOrderLeft}>
-        <p className={style.title}>Delivery Details</p>
-        <div className={style.multiInputs}>
-          <input type="text" name="firstName" onChange={onChangeHandler} value={data.firstName} placeholder='First Name' required/>
-          <input type="text" name="lastName" onChange={onChangeHandler} value={data.lastName} placeholder='Last Name' required/>
+    <form className="placeorder-page" onSubmit={placeOrder}>
+      {/* ─── LEFT: Delivery Details ─── */}
+      <div className="placeorder-left">
+        <h2 className="placeorder-title">Delivery Details</h2>
+
+        <div className="two-col">
+          <div className="form-group">
+            <label>First Name</label>
+            <input
+              type="text"
+              name="firstName"
+              placeholder="John"
+              value={data.firstName}
+              onChange={onChangeHandler}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Last Name</label>
+            <input
+              type="text"
+              name="lastName"
+              placeholder="Doe"
+              value={data.lastName}
+              onChange={onChangeHandler}
+              required
+            />
+          </div>
         </div>
-        <input type="email" name="email" onChange={onChangeHandler} value={data.email} placeholder='Email Address' required/>
-        <input type="text" name="street" onChange={onChangeHandler} value={data.street} placeholder='Street' required/>
-        <div className={style.multiInputs}>
-          <input type="text" name="city" onChange={onChangeHandler} value={data.city} placeholder='City' required/>
-          <input type="text" placeholder='State' name="state" onChange={onChangeHandler} value={data.state} required/>
+
+        <div className="form-group">
+          <label>Email</label>
+          <input
+            type="email"
+            name="email"
+            placeholder="john@example.com"
+            value={data.email}
+            onChange={onChangeHandler}
+            required
+          />
         </div>
-        <div className={style.multiInputs}>
-          <input type="text" placeholder='Zip Code' name="zipcode" onChange={onChangeHandler} value={data.zipcode} required/>
-          <input type="text" placeholder='Country' name="country" onChange={onChangeHandler} value={data.country} required/>
+
+        <div className="form-group">
+          <label>Phone</label>
+          <input
+            type="tel"
+            name="phone"
+            placeholder="+91 98765 43210"
+            value={data.phone}
+            onChange={onChangeHandler}
+            required
+          />
         </div>
-        <input type="text" placeholder='Phone Number' name="phone" onChange={onChangeHandler} value={data.phone} required/>
+
+        <div className="form-group">
+          <label>Street Address</label>
+          <input
+            type="text"
+            name="street"
+            placeholder="123 Main Street"
+            value={data.street}
+            onChange={onChangeHandler}
+            required
+          />
+        </div>
+
+        <div className="two-col">
+          <div className="form-group">
+            <label>City</label>
+            <input
+              type="text"
+              name="city"
+              placeholder="Mumbai"
+              value={data.city}
+              onChange={onChangeHandler}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>State</label>
+            <input
+              type="text"
+              name="state"
+              placeholder="Maharashtra"
+              value={data.state}
+              onChange={onChangeHandler}
+              required
+            />
+          </div>
+        </div>
+
+        <div className="two-col">
+          <div className="form-group">
+            <label>Zipcode</label>
+            <input
+              type="text"
+              name="zipcode"
+              placeholder="400001"
+              value={data.zipcode}
+              onChange={onChangeHandler}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label>Country</label>
+            <input
+              type="text"
+              name="country"
+              placeholder="India"
+              value={data.country}
+              onChange={onChangeHandler}
+              required
+            />
+          </div>
+        </div>
       </div>
-      <div className={style.placeOrderRight}>
-        <div className={style1.CartTotal}>
-          <h2>Cart Total</h2>
-          <div>
-            <div className={style1.CartTotalDetails}>
-              <p>Subtotal</p>
-              <p>${getTotalCartAmount()}</p>
+
+      {/* ─── RIGHT: Order Summary ─── */}
+      <div className="placeorder-right">
+        <div className="order-summary-card">
+          <h2 className="summary-title">Order Summary</h2>
+
+          {/* Cart Items List */}
+          <div className="cart-items-list">
+            {cartItems.length === 0 ? (
+              <p className="empty-cart-note">Your cart is empty.</p>
+            ) : (
+              cartItems.map((item) => {
+                const qty = cartItem[item._id];
+                const subtotalItem = item.price * qty;
+                return (
+                  <div className="summary-item" key={item._id}>
+                    <div className="summary-item-info">
+                      <img
+                        src={URl + "/images/" + item.image}
+                        alt={item.name}
+                        className="summary-item-img"
+                        onError={(e) => { e.target.style.display = "none"; }}
+                      />
+                      <div>
+                        <p className="summary-item-name">{item.name}</p>
+                        <p className="summary-item-qty">Qty: {qty}</p>
+                      </div>
+                    </div>
+                    <span className="summary-item-price">
+                      ₹{subtotalItem}
+                    </span>
+                  </div>
+                );
+              })
+            )}
+          </div>
+
+          <hr className="summary-divider" />
+
+          {/* Coupon Section */}
+          <div className="coupon-section">
+            <p className="coupon-label">Have a coupon?</p>
+            <div className="coupon-row">
+              <input
+                type="text"
+                className="coupon-input"
+                placeholder="Enter coupon code"
+                value={localCoupon}
+                onChange={(e) => {
+                  setLocalCoupon(e.target.value);
+                  setCouponError("");
+                }}
+              />
+              <button
+                type="button"
+                className="coupon-btn"
+                onClick={handleCouponApply}
+                disabled={couponLoading}
+              >
+                {couponLoading ? "Applying…" : "Apply"}
+              </button>
             </div>
-            <hr />
-            <div className={style1.CartTotalDetails}>
-              <p>Delivery Fee</p>
-              <p>${getTotalCartAmount() === 0 ? 0 : 5}</p>
+            {couponError && (
+              <p className="coupon-error">{couponError}</p>
+            )}
+            {discountAmount > 0 && !couponError && (
+              <p className="coupon-success">
+                🎉 Coupon <strong>{couponCode}</strong> applied!
+              </p>
+            )}
+          </div>
+
+          <hr className="summary-divider" />
+
+          {/* Totals */}
+          <div className="totals">
+            <div className="totals-row">
+              <span>Subtotal</span>
+              <span>₹{subtotal}</span>
             </div>
-            <hr />
-            <div className={style1.CartTotalDetails}>
-              <b>Total</b>
-              <b>${getTotalCartAmount() === 0 ? 0 : getTotalCartAmount() + 5}</b>
+            <div className="totals-row">
+              <span>Delivery Fee</span>
+              <span>₹{delivery}</span>
+            </div>
+            {discountAmount > 0 && (
+              <div className="totals-row discount-row">
+                <span>Discount</span>
+                <span>-₹{discountAmount}</span>
+              </div>
+            )}
+            <div className="totals-row total-row">
+              <span>Total</span>
+              <span>₹{total}</span>
             </div>
           </div>
-          <button type='submit'>Proceed To Payment</button>
+
+          <button type="submit" className="pay-btn">
+            Proceed to Pay ₹{total}
+          </button>
         </div>
       </div>
     </form>
-  )
-}
+  );
+};
 
-export default PlaceOrder
+export default PlaceOrder;

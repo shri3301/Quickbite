@@ -1,0 +1,266 @@
+/* ─── My Orders Page ────────────────────────────────────────── */
+.myorders-page {
+  padding: 40px 0;
+  min-height: 60vh;
+}
+
+.orders-page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.myorders-page h1 {
+  font-family: "Outfit", sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+/* ─── Refresh Button ────────────────────────────────────────── */
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  border-radius: 50px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.refresh-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* ─── No Orders ─────────────────────────────────────────────── */
+.no-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px;
+  gap: 12px;
+}
+
+.no-orders h3 {
+  font-family: "Outfit", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.no-orders p {
+  color: var(--text-muted);
+  font-size: 14px;
+  max-width: 280px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ─── Orders List ───────────────────────────────────────────── */
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ─── Order Card ────────────────────────────────────────────── */
+.order-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: box-shadow 0.2s ease;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+/* ─── Order Header ──────────────────────────────────────────── */
+.order-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.order-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.order-date {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.order-id {
+  font-size: 12px;
+  font-family: monospace;
+  color: var(--text-muted);
+  letter-spacing: 0.5px;
+}
+
+/* ─── Payment Badge ─────────────────────────────────────────── */
+.payment-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.badge-paid {
+  background: #e6f9f0;
+  color: #1a9e5e;
+}
+
+.badge-pending {
+  background: #f4f4f5;
+  color: #686b78;
+}
+
+/* ─── Items List ─────────────────────────────────────────────── */
+.items-list {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+.item-chip {
+  display: inline;
+}
+
+/* ─── Order Amount ───────────────────────────────────────────── */
+.order-amount {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-top: 1px dashed var(--border);
+  margin-top: 4px;
+}
+
+.amount-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.amount-value {
+  font-size: 18px;
+  font-weight: 700;
+  font-family: "Outfit", sans-serif;
+  color: var(--text);
+}
+
+/* ─── Status Tracker ─────────────────────────────────────────── */
+.status-track {
+  display: flex;
+  align-items: flex-start;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* step-wrapper holds the step + the connecting line after it */
+.step-wrapper {
+  display: flex;
+  align-items: flex-start;
+  flex: 1;
+}
+
+.step-wrapper:last-child {
+  flex: 0 0 auto;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Connecting line between steps */
+.step-line {
+  flex: 1;
+  height: 2px;
+  background: var(--border);
+  margin-top: 5px; /* aligns with center of dot */
+  transition: background 0.3s ease;
+}
+
+.step-line.line-done {
+  background: var(--primary);
+}
+
+/* Dot */
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg);
+  transition: background 0.2s ease, border-color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.step.done .step-dot {
+  background: var(--primary);
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(252, 128, 25, 0.15);
+}
+
+/* Label */
+.step-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  max-width: 72px;
+  line-height: 1.3;
+  white-space: normal;
+}
+
+.step.done .step-label {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .order-card {
+    padding: 18px 14px;
+  }
+
+  .myorders-page h1 {
+    font-size: 22px;
+  }
+
+  .step-label {
+    font-size: 9px;
+    max-width: 52px;
+  }
+
+  .step-dot {
+    width: 10px;
+    height: 10px;
+  }
+}

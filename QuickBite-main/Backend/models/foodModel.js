@@ -6,7 +6,11 @@ const foodSchema = new mongoose.Schema(
         description: { type: String, required: true },
         price: { type: Number, required: true },
         image: { type: String, required: true },
-        category: { type: String, required: true }
+        category: { type: String, required: true },
+        rating: { type: Number, default: 4.0, min: 1, max: 5 },
+        deliveryTime: { type: Number, default: 30 }, // in minutes
+        isVeg: { type: Boolean, default: true },
+        offer: { type: String, default: "" } // e.g. "20% OFF"
     }
 )
 

@@ -1,0 +1,237 @@
+/* ============ FOOD CARD ============ */
+.food-card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px var(--shadow);
+}
+
+/* Offer Badge */
+.food-offer-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: var(--primary);
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  letter-spacing: 0.2px;
+  font-family: 'Outfit', sans-serif;
+}
+
+/* Image */
+.food-image-wrap {
+  position: relative;
+  overflow: hidden;
+  height: 180px;
+  background: var(--bg-secondary);
+}
+
+.food-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.food-card:hover .food-img {
+  transform: scale(1.04);
+}
+
+/* Wishlist Heart */
+.wish-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 3;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.wish-btn:hover,
+.wish-btn.wishlisted {
+  background: rgba(255,255,255,0.95);
+  transform: scale(1.1);
+}
+
+/* Cart Controls */
+.food-cart-controls {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  z-index: 3;
+}
+
+.food-add-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: none;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(252,128,25,0.45);
+  transition: all 0.2s ease;
+}
+
+.food-add-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+.food-counter {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--primary);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(252,128,25,0.45);
+}
+
+.food-counter button {
+  width: 30px;
+  height: 30px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.15s;
+}
+
+.food-counter button:hover {
+  background: rgba(0,0,0,0.15);
+}
+
+.food-counter span {
+  min-width: 24px;
+  text-align: center;
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Info */
+.food-info {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.food-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.veg-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.veg-indicator.veg {
+  border: 1.5px solid var(--success);
+}
+
+.veg-indicator.nonveg {
+  border: 1.5px solid #E43B3B;
+}
+
+.veg-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.veg-indicator.veg span { background: var(--success); }
+.veg-indicator.nonveg span { background: #E43B3B; }
+
+.delivery-time {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.food-name {
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.food-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin: 0;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.food-bottom-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.food-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.food-price {
+  font-family: 'Outfit', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
