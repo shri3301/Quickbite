@@ -7,7 +7,7 @@ const Home = () => {
     <div className={style.a1}>
       <Header />
       <div className={style.homeContent}>
-        <h2>Welcome to QuickBite</h2>
+        <h2>Welcome to Foodify</h2>
         <p>Use the menu page to browse food options and the mobile app page to download the app.</p>
       </div>
     </div>

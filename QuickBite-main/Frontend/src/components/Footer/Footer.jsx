@@ -29,7 +29,7 @@ const Footer = () => {
                 <li>Phone: 7905898608</li>
                 <li>Email: shri21294@gmail.com</li>
                 <li>Address: 123 Main Street, Your City</li>
-                <li>Website: www.quickbite.com</li>
+                <li>Website: www.foodify.com</li>
             </ul>
         </div>
       </div>

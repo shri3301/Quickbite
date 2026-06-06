@@ -1,6 +1,6 @@
-# QuickBite - Food Management System
+# Foodify - Food Management System
 
-**QuickBite** is a fully responsive web-based food management system designed to simplify online food ordering and management. It provides an intuitive user interface for customers to explore the menu, add items to the cart, view the total cost, and proceed to checkout with Stripe payment integration. On the administrative side, QuickBite allows administrators to manage the menu by adding, updating, and removing items, as well as tracking orders and updating order statuses efficiently.
+**Foodify** is a fully responsive web-based food management system designed to simplify online food ordering and management. It provides an intuitive user interface for customers to explore the menu, add items to the cart, view the total cost, and proceed to checkout with payment integration. On the administrative side, Foodify allows administrators to manage the menu by adding, updating, and removing items, as well as tracking orders and updating order statuses efficiently.
 
 **Tech Stack**:  
 - **Frontend**: Vite + React
@@ -30,14 +30,14 @@ This repository contains three main folders:
 
 #### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/QuickBite.git
+git clone https://github.com/yourusername/foodify.git
 ```
 Or download the zip file and extract it.
 
 #### Step 2: Frontend Setup (User Interface)
 1. Navigate to the `Frontend` folder:
    ```bash
-   cd QuickBite/Frontend
+   cd foodify/Frontend
    ```
 2. Install dependencies:
    ```bash
@@ -62,7 +62,7 @@ Or download the zip file and extract it.
 3. Start the backend server:
    - In a new terminal, navigate to the `Backend` folder:
      ```bash
-     cd QuickBite/Backend
+     cd foodify/Backend
      ```
    - Start the backend server:
      ```bash
@@ -73,7 +73,7 @@ Or download the zip file and extract it.
 #### Step 4: Admin Interface Setup
 1. In a new terminal, navigate to the `Admin` folder:
    ```bash
-   cd QuickBite/Admin
+   cd foodify/Admin
    ```
 2. Install dependencies:
    ```bash
@@ -86,7 +86,7 @@ Or download the zip file and extract it.
 4. Access the admin interface via the localhost link in the console.
 
 ### 4. Screenshots
-Here is a walkthrough of the "QuickBite" application with screenshots for key functionalities:
+Here is a walkthrough of the "Foodify" application with screenshots for key functionalities:
 
 #### User Interface
 - **Home Page**  

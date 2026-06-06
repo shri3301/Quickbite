@@ -91,7 +91,7 @@ const PlaceOrder = () => {
           key,
           amount,
           currency,
-          name: "QuickBite",
+          name: "Foodify",
           description: "Food Order",
           order_id: razorpayOrderId,
           handler: async (razorpayResponse) => {

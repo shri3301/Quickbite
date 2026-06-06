@@ -6,7 +6,7 @@ const MobileApp = () => {
   return (
     <div className={style.mobileAppPage}>
       <h1>Mobile App</h1>
-      <p>Download the QuickBite app to order food faster and get exclusive offers.</p>
+      <p>Download the Foodify app to order food faster and get exclusive offers.</p>
       <AppDownload />
     </div>
   )
