@@ -56,7 +56,6 @@ const Navbar = ({ setShowLogin }) => {
       <div className="navbar-inner container">
         {/* Logo */}
         <Link to="/" className="navbar-logo">
-          <img src={assets.logo} alt="Foodify" />
           <span>Foodify</span>
         </Link>
 
