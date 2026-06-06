@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "./placeorder.css";
 
@@ -37,15 +37,12 @@ const PlaceOrder = () => {
   const [couponLoading, setCouponLoading] = useState(false);
   const [couponError, setCouponError] = useState("");
 
-  // Guard: redirect to cart if not logged in or cart is empty
+  // Guard: redirect to cart if not logged in
   useEffect(() => {
     if (!token) {
       navigate("/cart");
     }
-    if (getTotalCartAmount() === 0) {
-      navigate("/cart");
-    }
-  }, [token, getTotalCartAmount, navigate]);
+  }, [token, navigate]);
 
   // Dynamically load Razorpay SDK
   useEffect(() => {
@@ -174,6 +171,24 @@ const PlaceOrder = () => {
   const total = subtotal + delivery - discountAmount;
 
   const cartItems = food_list.filter((item) => cartItem[item._id] > 0);
+
+  if (!food_list || food_list.length === 0) {
+    return (
+      <div className="placeorder-page" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+        <p className="loading-text" style={{ fontSize: '18px', color: 'var(--text-muted)' }}>Loading checkout details...</p>
+      </div>
+    );
+  }
+
+  if (subtotal === 0) {
+    return (
+      <div className="placeorder-page" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', minHeight: '60vh', gap: '20px' }}>
+        <h2 style={{ fontFamily: 'Outfit, sans-serif', fontSize: '24px', fontWeight: 700, color: 'var(--text)' }}>Your Cart is Empty</h2>
+        <p style={{ fontSize: '14px', color: 'var(--text-muted)' }}>Please add items to your cart before proceeding to checkout.</p>
+        <Link to="/cart" className="btn-primary" style={{ padding: '12px 30px', borderRadius: '50px', fontWeight: 700 }}>Back to Cart</Link>
+      </div>
+    );
+  }
 
   return (
     <form className="placeorder-page" onSubmit={placeOrder}>
